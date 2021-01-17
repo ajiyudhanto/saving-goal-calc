@@ -34,6 +34,7 @@ export default function Home() {
 
   function onChangeHandler (event) {
     let newSimulation = {...simulation}
+    console.log(event.target.value)
     if (event.target.name === 'setoranAwal' || event.target.name === 'setoranRutin' || event.target.name === 'periodeInvestasi' || event.target.name === 'sukuBunga') {
       if ( isNaN(Number(event.target.value)) === true) {
         console.log('ini NAN')
@@ -97,7 +98,7 @@ export default function Home() {
   }
 
   function total () {
-    setProyeksiSaldo(e() + c())
+    setProyeksiSaldo((Math.round(e() + c())).toLocaleString(['ban', 'id']))
   }
 
   return (
