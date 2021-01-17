@@ -15,6 +15,8 @@ export default function Home() {
   })
 
   const [proyeksiSaldo, setProyeksiSaldo] = useState(0)
+  const [modal, setModal] = useState(0)
+  const [bunga, setBunga] = useState(0)
 
   useEffect(() => {
     total()
@@ -23,8 +25,10 @@ export default function Home() {
   function onChangeHandler (event) {
     let newSimulation = {...simulation}
     if (event.target.name === 'setoranAwal' || event.target.name === 'setoranRutin' || event.target.name === 'periodeInvestasi' || event.target.name === 'sukuBunga') {
-      if (!Number(event.target.value)) {
-        
+      if ( isNaN(Number(event.target.value)) === true) {
+        console.log('ini NAN')
+      } else if (!event.target.value || Number(event.target.value) < 0) {
+        newSimulation[event.target.name] = '0'
       } else {
         newSimulation[event.target.name] = event.target.value
       }
@@ -51,8 +55,7 @@ export default function Home() {
   }
 
   function a () {
-    //1+r/n
-    
+    //1+r/n    
     return 1 + ((Number(simulation.sukuBunga) / 100) / daysCount())
   }
 
@@ -103,6 +106,7 @@ export default function Home() {
               <ButtonGroup style={{ width: '100%' }}>
                 <Button
                   aria-label="reduce"
+                  onClick={() => setSimulation({...simulation, setoranAwal: (Number(simulation.setoranAwal) - 100).toString()})}
                 >
                   <RemoveIcon fontSize="small" style={{ color: 'blue' }} />
                 </Button>
@@ -129,6 +133,7 @@ export default function Home() {
               <ButtonGroup style={{ width: '100%' }}>
                 <Button
                   aria-label="increase"
+                  onClick={() => setSimulation({...simulation, setoranAwal: (Number(simulation.setoranAwal) + 100).toString()})}
                 >
                   <AddIcon fontSize="small" style={{ color: 'blue' }} />
                 </Button>
@@ -144,6 +149,7 @@ export default function Home() {
               <ButtonGroup style={{ width: '100%' }}>
                 <Button
                   aria-label="reduce"
+                  onClick={() => setSimulation({...simulation, setoranRutin: (Number(simulation.setoranRutin) - 50).toString()})}
                 >
                   <RemoveIcon fontSize="small" style={{ color: 'blue' }} />
                 </Button>
@@ -162,12 +168,15 @@ export default function Home() {
                 }}
                 variant='outlined'
                 size='small'
+                name='setoranRutin'
+                onChange={(event) => onChangeHandler(event)}
               />
             </Grid>
             <Grid xs={2} item container>
               <ButtonGroup style={{ width: '100%' }}>
                 <Button
                   aria-label="increase"
+                  onClick={() => setSimulation({...simulation, setoranRutin: (Number(simulation.setoranRutin) + 50).toString()})}
                 >
                   <AddIcon fontSize="small" style={{ color: 'blue' }} />
                 </Button>
@@ -175,7 +184,7 @@ export default function Home() {
             </Grid>
             <Grid xs={12} item container>
               <FormControl>
-                <RadioGroup row name="gender" value={simulation.periodeSetoranRutin}>
+                <RadioGroup row name="periodeSetoranRutin" onChange={(event) => onChangeHandler(event)} value={simulation.periodeSetoranRutin}>
                   <FormControlLabel value="bulanan" control={<Radio color="primary" />} label="Bulanan" />
                   <FormControlLabel value="tahunan" control={<Radio color="primary" />} label="Tahunan" />
                 </RadioGroup>
@@ -191,6 +200,7 @@ export default function Home() {
               <ButtonGroup style={{ width: '100%' }}>
                 <Button
                   aria-label="reduce"
+                  onClick={() => setSimulation({...simulation, periodeInvestasi: (Number(simulation.periodeInvestasi) - 1).toString()})}
                 >
                   <RemoveIcon fontSize="small" style={{ color: 'blue' }} />
                 </Button>
@@ -209,12 +219,15 @@ export default function Home() {
                   }
                 }}
                 size='small'
+                name='periodeInvestasi'
+                onChange={(event) => onChangeHandler(event)}
               />
             </Grid>
             <Grid xs={2} item container>
               <ButtonGroup style={{ width: '100%' }}>
                 <Button
                   aria-label="increase"
+                  onClick={() => setSimulation({...simulation, periodeInvestasi: (Number(simulation.periodeInvestasi) + 1).toString()})}
                 >
                   <AddIcon fontSize="small" style={{ color: 'blue' }} />
                 </Button>
@@ -230,6 +243,7 @@ export default function Home() {
               <ButtonGroup style={{ width: '100%' }}>
                 <Button
                   aria-label="reduce"
+                  onClick={() => setSimulation({...simulation, sukuBunga: (Number(simulation.sukuBunga) - .25).toString()})}
                 >
                   <RemoveIcon fontSize="small" style={{ color: 'blue' }} />
                 </Button>
@@ -248,12 +262,15 @@ export default function Home() {
                   }
                 }}
                 size='small'
+                name='sukuBunga'
+                onChange={(event) => onChangeHandler(event)}
               />
             </Grid>
             <Grid xs={2} item container>
               <ButtonGroup style={{ width: '100%' }}>
                 <Button
                   aria-label="increase"
+                  onClick={() => setSimulation({...simulation, sukuBunga: (Number(simulation.sukuBunga) + .25).toString()})}
                 >
                   <AddIcon fontSize="small" style={{ color: 'blue' }} />
                 </Button>
@@ -267,7 +284,7 @@ export default function Home() {
             </Grid>
             <Grid xs={12} item container>
               <FormControl>
-                <RadioGroup row name="gender" value={simulation.frekuensiBunga}>
+                <RadioGroup row name="frekuensiBunga" onChange={(event) => onChangeHandler(event)} value={simulation.frekuensiBunga}>
                   <FormControlLabel value="harian" control={<Radio color="primary" />} label="Harian" />
                   <FormControlLabel value="bulanan" control={<Radio color="primary" />} label="Bulanan" />
                   <FormControlLabel value="tahunan" control={<Radio color="primary" />} label="Tahunan" />
