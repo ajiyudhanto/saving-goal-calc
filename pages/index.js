@@ -19,7 +19,17 @@ export default function Home() {
   const [bunga, setBunga] = useState(0)
 
   useEffect(() => {
-    total()
+    if (simulation.sukuBunga === '0') {
+      let result = 0
+      if (simulation.periodeSetoranRutin === 'bulanan') {
+        result = Number(simulation.setoranAwal) + (Number(simulation.setoranRutin) * 12 * Number(simulation.periodeInvestasi))
+      } else {
+        result = Number(simulation.setoranAwal) + (Number(simulation.setoranRutin) * 1 * Number(simulation.periodeInvestasi))
+      }
+      setProyeksiSaldo(result)
+    } else {
+      total()
+    }
   }, [simulation.setoranAwal, simulation.setoranRutin, simulation.periodeSetoranRutin, simulation.periodeInvestasi, simulation.sukuBunga, simulation.frekuensiBunga])
 
   function onChangeHandler (event) {
@@ -77,7 +87,8 @@ export default function Home() {
 
   function d () {
     //future
-    return (Math.pow(a(), b()) - 1) / ((Number(simulation.sukuBunga) / 100) / daysCount())
+    let result = (Math.pow(a(), b()) - 1) / ((Number(simulation.sukuBunga) / 100) / daysCount())
+    return result
   }
 
   function e () {
