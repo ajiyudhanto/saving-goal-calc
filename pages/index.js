@@ -41,17 +41,23 @@ export default function Home() {
   function daysCount () {
     let days = 0
     if (simulation.frekuensiBunga === 'tahunan') {
-      days = 365
-    } else if (simulation.frekuensiBunga === 'bulanan') {
-      days = 30
-    } else if (simulation.frekuensiBunga === 'harian') {
       days = 1
+    } else if (simulation.frekuensiBunga === 'bulanan') {
+      days = 12
+    } else if (simulation.frekuensiBunga === 'harian') {
+      days = 365
     }
     return days
   }
 
   function p () {
-    return 12 / daysCount()
+    let count = 0
+    if (simulation.periodeSetoranRutin === 'bulanan') {
+      count = 12
+    } else {
+      count = 1
+    }
+    return count / daysCount()
   }
 
   function a () {
