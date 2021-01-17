@@ -96,7 +96,7 @@ export default function Home() {
         <Grid xs={10} item container justify='center' >
           <Typography variant='h5' style={{ fontWeight: 'bold', color: '#272727', marginTop: '50px', marginBottom: '50px' }}>Simulasi Bunga Berbunga</Typography>
         </Grid>
-        <Grid xs={10} item container justify='center'>
+        <Grid xs={10} sm={3} item container justify='center'>
 
           <Grid xs={12} item container justify='flex-start'>
             <Grid xs={12} item container justify='flex-start'>
@@ -105,6 +105,7 @@ export default function Home() {
             <Grid xs={2} item container>
               <ButtonGroup style={{ width: '100%' }}>
                 <Button
+                  style={{ width: '100%' }}
                   aria-label="reduce"
                   onClick={() => setSimulation({...simulation, setoranAwal: (Number(simulation.setoranAwal) - 100).toString()})}
                 >
@@ -133,6 +134,7 @@ export default function Home() {
               <ButtonGroup style={{ width: '100%' }}>
                 <Button
                   aria-label="increase"
+                  style={{ width: '100%' }}
                   onClick={() => setSimulation({...simulation, setoranAwal: (Number(simulation.setoranAwal) + 100).toString()})}
                 >
                   <AddIcon fontSize="small" style={{ color: 'blue' }} />
@@ -149,6 +151,7 @@ export default function Home() {
               <ButtonGroup style={{ width: '100%' }}>
                 <Button
                   aria-label="reduce"
+                  style={{ width: '100%' }}
                   onClick={() => setSimulation({...simulation, setoranRutin: (Number(simulation.setoranRutin) - 50).toString()})}
                 >
                   <RemoveIcon fontSize="small" style={{ color: 'blue' }} />
@@ -176,6 +179,7 @@ export default function Home() {
               <ButtonGroup style={{ width: '100%' }}>
                 <Button
                   aria-label="increase"
+                  style={{ width: '100%' }}
                   onClick={() => setSimulation({...simulation, setoranRutin: (Number(simulation.setoranRutin) + 50).toString()})}
                 >
                   <AddIcon fontSize="small" style={{ color: 'blue' }} />
@@ -200,6 +204,7 @@ export default function Home() {
               <ButtonGroup style={{ width: '100%' }}>
                 <Button
                   aria-label="reduce"
+                  style={{ width: '100%' }}
                   onClick={() => setSimulation({...simulation, periodeInvestasi: (Number(simulation.periodeInvestasi) - 1).toString()})}
                 >
                   <RemoveIcon fontSize="small" style={{ color: 'blue' }} />
@@ -227,6 +232,7 @@ export default function Home() {
               <ButtonGroup style={{ width: '100%' }}>
                 <Button
                   aria-label="increase"
+                  style={{ width: '100%' }}
                   onClick={() => setSimulation({...simulation, periodeInvestasi: (Number(simulation.periodeInvestasi) + 1).toString()})}
                 >
                   <AddIcon fontSize="small" style={{ color: 'blue' }} />
@@ -243,6 +249,7 @@ export default function Home() {
               <ButtonGroup style={{ width: '100%' }}>
                 <Button
                   aria-label="reduce"
+                  style={{ width: '100%' }}
                   onClick={() => setSimulation({...simulation, sukuBunga: (Number(simulation.sukuBunga) - .25).toString()})}
                 >
                   <RemoveIcon fontSize="small" style={{ color: 'blue' }} />
@@ -270,6 +277,7 @@ export default function Home() {
               <ButtonGroup style={{ width: '100%' }}>
                 <Button
                   aria-label="increase"
+                  style={{ width: '100%' }}
                   onClick={() => setSimulation({...simulation, sukuBunga: (Number(simulation.sukuBunga) + .25).toString()})}
                 >
                   <AddIcon fontSize="small" style={{ color: 'blue' }} />
