@@ -357,7 +357,15 @@ export default function Home() {
           <Typography style={{ fontWeight: 'bold' }}>Rp. {proyeksiSaldo}</Typography>
         </Grid>
         <Grid xs={10} item container justify='center'>
-          <Typography style={{ fontWeight: 'bold' }}>{progressChart.toString()}</Typography>
+          <BarChart width={730} height={250} data={ progressChart }>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="deposit" stackId='a' fill="#8884d8" />
+            <Bar dataKey="interest" stackId='a' fill="#82ca9d" />
+          </BarChart>
         </Grid>
       </Grid>
     </div>
