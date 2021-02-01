@@ -3,6 +3,7 @@ import Head from 'next/head'
 import { Grid, Typography, TextField, Button, ButtonGroup, InputAdornment, RadioGroup, Radio, FormControl, FormControlLabel } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
+import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar } from 'recharts'
 
 export default function Home() {
   const [simulation, setSimulation] = useState({
@@ -14,6 +15,7 @@ export default function Home() {
     frekuensiBunga: 'tahunan'
   })
 
+  const [progressChart, setProgressChart] = useState([])
   const [proyeksiSaldo, setProyeksiSaldo] = useState(0)
   const [modal, setModal] = useState(0)
   const [bunga, setBunga] = useState(0)
@@ -28,8 +30,9 @@ export default function Home() {
       }
       setProyeksiSaldo(result)
     } else {
-      total()
+      setProyeksiSaldo(total(simulation.periodeInvestasi).toLocaleString(['ban', 'id']))
     }
+    changeChart()
   }, [simulation.setoranAwal, simulation.setoranRutin, simulation.periodeSetoranRutin, simulation.periodeInvestasi, simulation.sukuBunga, simulation.frekuensiBunga])
 
   function onChangeHandler (event) {
@@ -47,6 +50,31 @@ export default function Home() {
       newSimulation[event.target.name] = event.target.value
     }
     setSimulation(newSimulation)
+  }
+
+  function changeChart () {
+    let chartData = []
+    let dateNow = new Date()
+    let depositNow = Number(simulation.setoranAwal)
+    let interestNow = 0
+    for (let i = 0; i < Number(simulation.periodeInvestasi); i++) {
+      if (simulation.periodeSetoranRutin === 'bulanan') {
+        depositNow += (12 * Number(simulation.setoranRutin))
+      } else {
+        depositNow += (1 * Number(simulation.setoranRutin))
+      }
+      console.log(`total tahun ke-${i + 1}`, total(i + 1))
+      console.log(`deposit tahun ke-${i + 1}`, depositNow)
+      console.log(`interest tahun ke-${i + 1}`, total(i + 1) - depositNow)
+      let obj = {
+        name: dateNow.getFullYear() + i,
+        deposit: depositNow,
+        interest: total(i + 1) - depositNow
+      }
+      chartData.push(obj)
+    }
+    
+    setProgressChart(chartData)
   }
 
   function daysCount () {
@@ -76,29 +104,31 @@ export default function Home() {
     return 1 + ((Number(simulation.sukuBunga) / 100) / daysCount())
   }
 
-  function b () {
+  function b (period) {
     //nt
-    return daysCount() * Number(simulation.periodeInvestasi)
+    return daysCount() * Number(period)
   }
 
-  function c () {
+  function c (period) {
     //compound
-    return Number(simulation.setoranAwal) * (Math.pow(a(), b()))
+    return Number(simulation.setoranAwal) * (Math.pow(a(), b(period)))
   }
 
-  function d () {
+  function d (period) {
     //future
-    let result = (Math.pow(a(), b()) - 1) / ((Number(simulation.sukuBunga) / 100) / daysCount())
+    let result = (Math.pow(a(), b(period)) - 1) / ((Number(simulation.sukuBunga) / 100) / daysCount())
     return result
   }
 
-  function e () {
+  function e (period) {
     //future value series
-    return d() * Number(simulation.setoranRutin) * p()
+    return d(period) * Number(simulation.setoranRutin) * p()
   }
 
-  function total () {
-    setProyeksiSaldo((Math.round(e() + c())).toLocaleString(['ban', 'id']))
+  function total (period) {
+    const res = Math.round(e(period) + c(period))
+    return res
+    setProyeksiSaldo((Math.round(e(period) + c(period))).toLocaleString(['ban', 'id']))
   }
 
   return (
@@ -325,6 +355,9 @@ export default function Home() {
         </Grid>
         <Grid xs={10} item container justify='center'>
           <Typography style={{ fontWeight: 'bold' }}>Rp. {proyeksiSaldo}</Typography>
+        </Grid>
+        <Grid xs={10} item container justify='center'>
+          <Typography style={{ fontWeight: 'bold' }}>{progressChart.toString()}</Typography>
         </Grid>
       </Grid>
     </div>
