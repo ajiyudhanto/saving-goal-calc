@@ -1,9 +1,24 @@
 import { useState, useEffect } from 'react'
 import Head from 'next/head'
-import { Grid, Typography, TextField, Button, ButtonGroup, InputAdornment, RadioGroup, Radio, FormControl, FormControlLabel } from '@material-ui/core'
+import { Grid, Typography, TextField, Button, ButtonGroup, RadioGroup, Radio, FormControl, FormControlLabel } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
-import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar } from 'recharts'
+import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar, ResponsiveContainer } from 'recharts'
+
+const CustomTooltip = ({ active, payload, label }) => {
+  if (active && payload) {
+    return (
+      <div style={{ background: 'white', padding: 10 }}>
+        <Typography style={{ fontWeight: 'bolder' }}>{ label }</Typography>
+        <Typography style={{ color: payload[0].fill }}>{`${payload[0].name} : Rp. ${payload[0].value.toLocaleString(['ban', 'id'])},00`}</Typography>
+        <Typography style={{ color: payload[1].fill }}>{`${payload[1].name} : Rp. ${payload[1].value.toLocaleString(['ban', 'id'])},00`}</Typography>
+        <Typography style={{ color: 'blue' }}>{`Total : Rp. ${(payload[1].value + payload[0].value).toLocaleString(['ban', 'id'])},00`}</Typography>
+      </div>
+    );
+  }
+
+  return null;
+};
 
 export default function Home() {
   const [simulation, setSimulation] = useState({
@@ -14,7 +29,7 @@ export default function Home() {
     sukuBunga: '10',
     frekuensiBunga: 'tahunan'
   })
-
+  
   const [progressChart, setProgressChart] = useState([])
   const [proyeksiSaldo, setProyeksiSaldo] = useState(0)
   const [modal, setModal] = useState(0)
@@ -56,20 +71,17 @@ export default function Home() {
     let chartData = []
     let dateNow = new Date()
     let depositNow = Number(simulation.setoranAwal)
-    let interestNow = 0
     for (let i = 0; i < Number(simulation.periodeInvestasi); i++) {
       if (simulation.periodeSetoranRutin === 'bulanan') {
         depositNow += (12 * Number(simulation.setoranRutin))
       } else {
         depositNow += (1 * Number(simulation.setoranRutin))
       }
-      console.log(`total tahun ke-${i + 1}`, total(i + 1))
-      console.log(`deposit tahun ke-${i + 1}`, depositNow)
-      console.log(`interest tahun ke-${i + 1}`, total(i + 1) - depositNow)
+
       let obj = {
         name: dateNow.getFullYear() + i,
-        deposit: depositNow,
-        interest: total(i + 1) - depositNow
+        Deposit: depositNow,
+        Interest: total(i + 1) - depositNow
       }
       chartData.push(obj)
     }
@@ -130,7 +142,7 @@ export default function Home() {
     return res
     setProyeksiSaldo((Math.round(e(period) + c(period))).toLocaleString(['ban', 'id']))
   }
-
+  console.log(progressChart)
   return (
     <div className='root'>
       <Head>
@@ -145,7 +157,6 @@ export default function Home() {
           <Typography variant='h5' style={{ fontWeight: 'bold', color: '#272727', marginTop: '50px', marginBottom: '50px' }}>Simulasi Bunga Berbunga</Typography>
         </Grid>
         <Grid xs={10} sm={3} item container justify='center'>
-
           <Grid xs={12} item container justify='flex-start'>
             <Grid xs={12} item container justify='flex-start'>
               <Typography style={{ fontWeight: 'bold' }}>Setoran Awal (Rupiah)</Typography>
@@ -155,7 +166,13 @@ export default function Home() {
                 <Button
                   style={{ width: '100%' }}
                   aria-label="reduce"
-                  onClick={() => setSimulation({...simulation, setoranAwal: (Number(simulation.setoranAwal) - 100).toString()})}
+                  onClick={() => {
+                    if (Number(simulation.setoranAwal - 100 <= 0)) {
+                      setSimulation({...simulation, setoranAwal: '0'})
+                    } else {
+                      setSimulation({...simulation, setoranAwal: (Number(simulation.setoranAwal) - 100).toString()})
+                    }
+                  }}
                 >
                   <RemoveIcon fontSize="small" style={{ color: 'blue' }} />
                 </Button>
@@ -163,10 +180,7 @@ export default function Home() {
             </Grid>
             <Grid xs={8} item container justify='flex-start'>
               <TextField
-                value={simulation.setoranAwal}
-                // InputProps={{
-                //   startAdornment: <InputAdornment position="start">Rp.</InputAdornment>,
-                // }}
+                value={simulation.setoranAwal}                
                 inputProps={{
                   style: {
                     textAlign: 'center'
@@ -200,7 +214,13 @@ export default function Home() {
                 <Button
                   aria-label="reduce"
                   style={{ width: '100%' }}
-                  onClick={() => setSimulation({...simulation, setoranRutin: (Number(simulation.setoranRutin) - 50).toString()})}
+                  onClick={() => {
+                    if (Number(simulation.setoranRutin) - 50 <= 0) {
+                      setSimulation({...simulation, setoranRutin: '0'})
+                    } else {
+                      setSimulation({...simulation, setoranRutin: (Number(simulation.setoranRutin) - 50).toString()})
+                    }
+                  }}
                 >
                   <RemoveIcon fontSize="small" style={{ color: 'blue' }} />
                 </Button>
@@ -253,7 +273,13 @@ export default function Home() {
                 <Button
                   aria-label="reduce"
                   style={{ width: '100%' }}
-                  onClick={() => setSimulation({...simulation, periodeInvestasi: (Number(simulation.periodeInvestasi) - 1).toString()})}
+                  onClick={() => {
+                    if (Number(simulation.periodeInvestasi) - 1 <= 0) {
+                      setSimulation({...simulation, periodeInvestasi: '0'})
+                    } else {
+                      setSimulation({...simulation, periodeInvestasi: (Number(simulation.periodeInvestasi) - 1).toString()})
+                    }
+                  }}
                 >
                   <RemoveIcon fontSize="small" style={{ color: 'blue' }} />
                 </Button>
@@ -263,9 +289,6 @@ export default function Home() {
               <TextField
                 value={simulation.periodeInvestasi}
                 variant='outlined'
-                // InputProps={{
-                //   endAdornment: <InputAdornment position="start">Tahun</InputAdornment>,
-                // }}
                 inputProps={{
                   style: {
                     textAlign: 'center'
@@ -298,7 +321,13 @@ export default function Home() {
                 <Button
                   aria-label="reduce"
                   style={{ width: '100%' }}
-                  onClick={() => setSimulation({...simulation, sukuBunga: (Number(simulation.sukuBunga) - .25).toString()})}
+                  onClick={() => {
+                    if (Number(simulation.sukuBunga) - .25 <= 0) {
+                      setSimulation({...simulation, sukuBunga: '0'})
+                    } else {
+                      setSimulation({...simulation, sukuBunga: (Number(simulation.sukuBunga) - .25).toString()})
+                    }
+                  }}
                 >
                   <RemoveIcon fontSize="small" style={{ color: 'blue' }} />
                 </Button>
@@ -307,10 +336,7 @@ export default function Home() {
             <Grid xs={8} item container justify='flex-start'>
               <TextField
                 value={simulation.sukuBunga}
-                variant='outlined'
-                // InputProps={{
-                //   endAdornment: <InputAdornment position="start">%</InputAdornment>,
-                // }}
+                variant='outlined'                
                 inputProps={{
                   style: {
                     textAlign: 'center'
@@ -354,18 +380,20 @@ export default function Home() {
           <Typography style={{ fontWeight: 'bold' }}>PROYEKSI SALDO</Typography>
         </Grid>
         <Grid xs={10} item container justify='center'>
-          <Typography style={{ fontWeight: 'bold' }}>Rp. {proyeksiSaldo}</Typography>
+          <Typography style={{ fontWeight: 'bold' }}>Rp. {proyeksiSaldo},00</Typography>
         </Grid>
         <Grid xs={10} item container justify='center'>
-          <BarChart width={730} height={250} data={ progressChart }>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey="deposit" stackId='a' fill="#8884d8" />
-            <Bar dataKey="interest" stackId='a' fill="#82ca9d" />
-          </BarChart>
+          <ResponsiveContainer width="95%" height={400}>
+            <BarChart  margin={{ top: 20, right: 0, left: 0, bottom: 50 }} data={ progressChart } >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis width={100} />
+              <Tooltip payload={ progressChart } content={<CustomTooltip />} />
+              <Legend verticalAlign='bottom' height={5} />
+              <Bar dataKey="Deposit" stackId='a' fill="#8884d8" />
+              <Bar dataKey="Interest" stackId='a' fill="#82ca9d" />
+            </BarChart>
+          </ResponsiveContainer>
         </Grid>
       </Grid>
     </div>
