@@ -40,13 +40,6 @@ export default function Navbar () {
                 >
                   Home
                 </Button>
-                <Button
-                  className='navbar-btn'
-                  startIcon={<LockIcon style={{ color: 'white' }} />}
-                  style={{ color: 'white' }}
-                >
-                  Login
-                </Button>
               </Hidden>
               <Hidden smUp>
                 <IconButton
@@ -72,15 +65,6 @@ export default function Navbar () {
                       style={{ color: '#39bcb6' }}
                     >
                       Home
-                    </Button>
-                  </MenuItem>
-                  <MenuItem>
-                    <Button
-                      className='navbar-btn'
-                      startIcon={<LockIcon style={{ color: '#39bcb6' }} />}
-                      style={{ color: '#39bcb6' }}
-                    >
-                      Login
                     </Button>
                   </MenuItem>
                 </Menu>
