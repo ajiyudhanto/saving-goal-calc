@@ -153,16 +153,13 @@ export default function Home() {
       </Head>
 
       <Navbar />
-      <Grid container justify='center'>
-        <Grid xs={12} item container justify='center' >
-          <Typography variant='h5' style={{ fontWeight: 'bold', color: '#272727', marginTop: '50px', marginBottom: '50px' }}>Simulasi Bunga Berbunga</Typography>
-        </Grid>
-        <Grid xs={10} sm={3} item container justify='center'>
+      <Grid container justify='center' alignItems='center' style={{ minHeight: '91vh' }}>
+        <Grid xs={10} sm={3} item container justify='center' alignItems='center'>
           <Grid xs={12} item container justify='flex-start'>
             <Grid xs={12} item container justify='flex-start'>
               <Typography style={{ fontWeight: 'bold' }}>Setoran Awal (Rupiah)</Typography>
             </Grid>
-            <Grid xs={2} item container>
+            <Grid xs={3} sm={3} md={2} item container>
               <ButtonGroup style={{ width: '100%' }}>
                 <Button
                   style={{ width: '100%' }}
@@ -179,7 +176,7 @@ export default function Home() {
                 </Button>
               </ButtonGroup>
             </Grid>
-            <Grid xs={8} item container justify='flex-start'>
+            <Grid xs={6} sm={6} md={8} item container justify='flex-start' style={{ width: '100%' }}>
               <TextField
                 value={simulation.setoranAwal}                
                 inputProps={{
@@ -187,13 +184,14 @@ export default function Home() {
                     textAlign: 'center'
                   }
                 }}
+                style={{ width: '100%' }}
                 name='setoranAwal'
                 variant='outlined'
                 size='small'
                 onChange={(event) => onChangeHandler(event)}
               />
             </Grid>
-            <Grid xs={2} item container>
+            <Grid xs={3} sm={3} md={2} item container>
               <ButtonGroup style={{ width: '100%' }}>
                 <Button
                   aria-label="increase"
@@ -210,7 +208,7 @@ export default function Home() {
             <Grid xs={12} item container justify='flex-start'>
               <Typography style={{ fontWeight: 'bold' }}>Setoran Rutin (Rupiah)</Typography>
             </Grid>
-            <Grid xs={2} item container>
+            <Grid xs={3} sm={3} md={2} item container>
               <ButtonGroup style={{ width: '100%' }}>
                 <Button
                   aria-label="reduce"
@@ -227,7 +225,7 @@ export default function Home() {
                 </Button>
               </ButtonGroup>
             </Grid>
-            <Grid xs={8} item container justify='flex-start'>
+            <Grid xs={6} sm={6} md={8} item container justify='flex-start'>
               <TextField
                 value={simulation.setoranRutin}
                 // InputProps={{
@@ -238,13 +236,14 @@ export default function Home() {
                     textAlign: 'center'
                   }
                 }}
+                style={{ width: '100%' }}
                 variant='outlined'
                 size='small'
                 name='setoranRutin'
                 onChange={(event) => onChangeHandler(event)}
               />
             </Grid>
-            <Grid xs={2} item container>
+            <Grid xs={3} sm={3} md={2} item container>
               <ButtonGroup style={{ width: '100%' }}>
                 <Button
                   aria-label="increase"
@@ -269,7 +268,7 @@ export default function Home() {
             <Grid xs={12} item container justify='flex-start'>
               <Typography style={{ fontWeight: 'bold' }}>Periode Investasi (Tahun)</Typography>
             </Grid>
-            <Grid xs={2} item container>
+            <Grid xs={3} sm={3} md={2} item container>
               <ButtonGroup style={{ width: '100%' }}>
                 <Button
                   aria-label="reduce"
@@ -286,7 +285,7 @@ export default function Home() {
                 </Button>
               </ButtonGroup>
             </Grid>
-            <Grid xs={8} item container justify='flex-start'>
+            <Grid xs={6} sm={6} md={8} item container justify='flex-start'>
               <TextField
                 value={simulation.periodeInvestasi}
                 variant='outlined'
@@ -296,11 +295,12 @@ export default function Home() {
                   }
                 }}
                 size='small'
+                style={{ width: '100%' }}
                 name='periodeInvestasi'
                 onChange={(event) => onChangeHandler(event)}
               />
             </Grid>
-            <Grid xs={2} item container>
+            <Grid xs={3} sm={3} md={2} item container>
               <ButtonGroup style={{ width: '100%' }}>
                 <Button
                   aria-label="increase"
@@ -317,7 +317,7 @@ export default function Home() {
             <Grid xs={12} item container justify='flex-start'>
               <Typography style={{ fontWeight: 'bold' }}>Suku Bunga (%)</Typography>
             </Grid>
-            <Grid xs={2} item container>
+            <Grid xs={3} sm={3} md={2} item container>
               <ButtonGroup style={{ width: '100%' }}>
                 <Button
                   aria-label="reduce"
@@ -334,7 +334,7 @@ export default function Home() {
                 </Button>
               </ButtonGroup>
             </Grid>
-            <Grid xs={8} item container justify='flex-start'>
+            <Grid xs={6} sm={6} md={8} item container justify='flex-start'>
               <TextField
                 value={simulation.sukuBunga}
                 variant='outlined'                
@@ -343,12 +343,13 @@ export default function Home() {
                     textAlign: 'center'
                   }
                 }}
+                style={{ width: '100%' }}
                 size='small'
                 name='sukuBunga'
                 onChange={(event) => onChangeHandler(event)}
               />
             </Grid>
-            <Grid xs={2} item container>
+            <Grid xs={3} sm={3} md={2} item container>
               <ButtonGroup style={{ width: '100%' }}>
                 <Button
                   aria-label="increase"
