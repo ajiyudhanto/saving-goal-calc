@@ -140,9 +140,8 @@ export default function Home() {
   function total (period) {
     const res = Math.round(e(period) + c(period))
     return res
-    setProyeksiSaldo((Math.round(e(period) + c(period))).toLocaleString(['ban', 'id']))
   }
-  console.log(progressChart)
+  
   return (
     <div className='root'>
       <Head>
@@ -153,7 +152,7 @@ export default function Home() {
       </Head>
 
       <Grid container justify='center'>
-        <Grid xs={10} item container justify='center' >
+        <Grid xs={12} item container justify='center' >
           <Typography variant='h5' style={{ fontWeight: 'bold', color: '#272727', marginTop: '50px', marginBottom: '50px' }}>Simulasi Bunga Berbunga</Typography>
         </Grid>
         <Grid xs={10} sm={3} item container justify='center'>
@@ -374,26 +373,27 @@ export default function Home() {
               </FormControl>
             </Grid>
           </Grid>
-
         </Grid>
-        <Grid xs={10} item container justify='center'>
-          <Typography style={{ fontWeight: 'bold' }}>PROYEKSI SALDO</Typography>
-        </Grid>
-        <Grid xs={10} item container justify='center'>
-          <Typography style={{ fontWeight: 'bold' }}>Rp. {proyeksiSaldo},00</Typography>
-        </Grid>
-        <Grid xs={10} item container justify='center'>
-          <ResponsiveContainer width="95%" height={400}>
-            <BarChart  margin={{ top: 20, right: 0, left: 0, bottom: 50 }} data={ progressChart } >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis width={100} />
-              <Tooltip payload={ progressChart } content={<CustomTooltip />} />
-              <Legend verticalAlign='bottom' height={5} />
-              <Bar dataKey="Deposit" stackId='a' fill="#8884d8" />
-              <Bar dataKey="Interest" stackId='a' fill="#82ca9d" />
-            </BarChart>
-          </ResponsiveContainer>
+        <Grid xs={10} sm={6} item container justify='center' >
+          <Grid xs={12} item container justify='center'>
+            <Typography style={{ fontWeight: 'bold' }}>PROYEKSI SALDO</Typography>
+          </Grid>
+          <Grid xs={12} item container justify='center'>
+            <Typography style={{ fontWeight: 'bold' }}>Rp. {proyeksiSaldo},00</Typography>
+          </Grid>
+          <Grid xs={12} item container justify='center'>
+            <ResponsiveContainer width="95%" height={400}>
+              <BarChart  margin={{ top: 20, right: 0, left: 0, bottom: 50 }} data={ progressChart } >
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis width={100} />
+                <Tooltip payload={ progressChart } content={<CustomTooltip />} />
+                <Legend verticalAlign='bottom' height={5} />
+                <Bar dataKey="Deposit" stackId='a' fill="#8884d8" />
+                <Bar dataKey="Interest" stackId='a' fill="#82ca9d" />
+              </BarChart>
+            </ResponsiveContainer>
+          </Grid>
         </Grid>
       </Grid>
     </div>
