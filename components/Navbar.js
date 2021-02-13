@@ -35,13 +35,15 @@ export default function Navbar () {
               <Hidden xsDown>
                 <Button
                   className='navbar-btn'
-                  startIcon={<HomeIcon />}
+                  startIcon={<HomeIcon style={{ color: 'white' }} />}
+                  style={{ color: 'white' }}
                 >
                   Home
                 </Button>
                 <Button
                   className='navbar-btn'
-                  startIcon={<LockIcon />}
+                  startIcon={<LockIcon style={{ color: 'white' }} />}
+                  style={{ color: 'white' }}
                 >
                   Login
                 </Button>
@@ -52,6 +54,7 @@ export default function Navbar () {
                   aria-controls="long-menu"
                   aria-haspopup="true"
                   onClick={handleClick}
+                  style={{ color: 'white' }}
                 >
                   <MenuIcon />
                 </IconButton>
@@ -65,7 +68,8 @@ export default function Navbar () {
                   <MenuItem>
                     <Button
                       className='navbar-btn'
-                      startIcon={<HomeIcon />}
+                      startIcon={<HomeIcon style={{ color: 'white' }} />}
+                      style={{ color: 'white' }}
                     >
                       Home
                     </Button>
@@ -73,7 +77,8 @@ export default function Navbar () {
                   <MenuItem>
                     <Button
                       className='navbar-btn'
-                      startIcon={<LockIcon />}
+                      startIcon={<LockIcon style={{ color: 'white' }} />}
+                      style={{ color: 'white' }}
                     >
                       Login
                     </Button>
