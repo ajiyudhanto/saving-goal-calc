@@ -55,28 +55,62 @@ export default function Home() {
     let newSimulation = {...simulation}
     console.log(event.target.value)
     if (event.target.name === 'setoranAwal' || event.target.name === 'setoranRutin' || event.target.name === 'periodeInvestasi' || event.target.name === 'sukuBunga') {
-      if ( isNaN(Number(event.target.value)) === true) {
+      if ( isNaN(Number(event.target.value)) === true && isNaN(toNumberConverter(event.target.value))) {
         console.log('ini NAN')
-      } else if (!event.target.value || Number(event.target.value) < 0) {
+      } else if (!event.target.value || toNumberConverter(event.target.value) < 0) {
         newSimulation[event.target.name] = '0'
       } else {
-        newSimulation[event.target.name] = event.target.value
+        let localeString = toStringConverter(event.target.value, event.target.name)
+        newSimulation[event.target.name] = localeString
       }
     } else {
-      newSimulation[event.target.name] = event.target.value
+      let localeString = toStringConverter(event.target.value, event.target.name)
+      newSimulation[event.target.name] = localeString
     }
     setSimulation(newSimulation)
+  }
+
+  function toNumberConverter (str) {
+    let arrTemp = str.split('')
+    let newStr = ''
+    for (let i = 0; i < arrTemp.length; i++) {
+      if (arrTemp[i] !== '.') {
+        newStr += arrTemp[i]
+      }
+    }
+    
+    return Number(newStr)
+  }
+
+  function toStringConverter (str, name) {
+    // console.log(number, name)
+    let number = toNumberConverter(str)
+    if (number >= 1000) {
+      let numbersTemp = number.toString().split('')
+      let count = 0
+      for(let i = numbersTemp.length - 1; i >= 0; i--) {
+        count++
+        if (count === 3 && i !== 0) {
+          count = 0
+          numbersTemp.splice(i, 0, '.')
+        }
+      }
+      // console.log(numbersTemp.join(''), 'temp')
+      return numbersTemp.join('')
+    } else {
+      return toNumberConverter(str).toString()
+    }
   }
 
   function changeChart () {
     let chartData = []
     let dateNow = new Date()
-    let depositNow = Number(simulation.setoranAwal)
-    for (let i = 0; i < Number(simulation.periodeInvestasi); i++) {
+    let depositNow = toNumberConverter(simulation.setoranAwal)
+    for (let i = 0; i < toNumberConverter(simulation.periodeInvestasi); i++) {
       if (simulation.periodeSetoranRutin === 'bulanan') {
-        depositNow += (12 * Number(simulation.setoranRutin))
+        depositNow += (12 * toNumberConverter(simulation.setoranRutin))
       } else {
-        depositNow += (1 * Number(simulation.setoranRutin))
+        depositNow += (1 * toNumberConverter(simulation.setoranRutin))
       }
 
       let obj = {
@@ -86,7 +120,7 @@ export default function Home() {
       }
       chartData.push(obj)
     }
-    
+    console.log(chartData, 'cd')
     setProgressChart(chartData)
   }
 
@@ -114,7 +148,7 @@ export default function Home() {
 
   function a () {
     //1+r/n    
-    return 1 + ((Number(simulation.sukuBunga) / 100) / daysCount())
+    return 1 + ((toNumberConverter(simulation.sukuBunga) / 100) / daysCount())
   }
 
   function b (period) {
@@ -124,18 +158,18 @@ export default function Home() {
 
   function c (period) {
     //compound
-    return Number(simulation.setoranAwal) * (Math.pow(a(), b(period)))
+    return toNumberConverter(simulation.setoranAwal) * (Math.pow(a(), b(period)))
   }
 
   function d (period) {
     //future
-    let result = (Math.pow(a(), b(period)) - 1) / ((Number(simulation.sukuBunga) / 100) / daysCount())
+    let result = (Math.pow(a(), b(period)) - 1) / ((toNumberConverter(simulation.sukuBunga) / 100) / daysCount())
     return result
   }
 
   function e (period) {
     //future value series
-    return d(period) * Number(simulation.setoranRutin) * p()
+    return d(period) * toNumberConverter(simulation.setoranRutin) * p()
   }
 
   function total (period) {
