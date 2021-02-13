@@ -23,8 +23,8 @@ const CustomTooltip = ({ active, payload, label }) => {
 
 export default function Home() {
   const [simulation, setSimulation] = useState({
-    setoranAwal: '1000000',
-    setoranRutin: '100000',
+    setoranAwal: '1.000.000',
+    setoranRutin: '100.000',
     periodeSetoranRutin: 'bulanan',
     periodeInvestasi: '3',
     sukuBunga: '10',
