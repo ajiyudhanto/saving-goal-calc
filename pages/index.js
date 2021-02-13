@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import Head from 'next/head'
-import { Grid, Typography, TextField, Button, ButtonGroup, RadioGroup, Radio, FormControl, FormControlLabel } from '@material-ui/core'
+import { Grid, Typography, TextField, Button, ButtonGroup, RadioGroup, Radio, FormControl, FormControlLabel, Hidden } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar, ResponsiveContainer } from 'recharts'
@@ -154,6 +154,9 @@ export default function Home() {
 
       <Navbar />
       <Grid container justify='center' alignItems='center' style={{ minHeight: '91vh' }}>
+        <Hidden smUp>
+          <Grid item xs={12} style={{ height: '5vh' }} />
+        </Hidden>
         <Grid xs={10} sm={3} item container justify='center' alignItems='center'>
           <Grid xs={12} item container justify='flex-start'>
             <Grid xs={12} item container justify='flex-start'>
@@ -377,6 +380,9 @@ export default function Home() {
             </Grid>
           </Grid>
         </Grid>
+        <Hidden smDown>
+          <Grid item xs={1} />
+        </Hidden>
         <Grid xs={10} sm={6} item container justify='center' >
           <Grid xs={12} item container justify='center'>
             <Typography style={{ fontWeight: 'bold' }}>PROYEKSI SALDO</Typography>
@@ -389,7 +395,7 @@ export default function Home() {
               <BarChart  margin={{ top: 20, right: 0, left: 0, bottom: 50 }} data={ progressChart } >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
-                <YAxis width={100} />
+                <YAxis width={80} />
                 <Tooltip payload={ progressChart } content={<CustomTooltip />} />
                 <Legend verticalAlign='bottom' height={5} />
                 <Bar dataKey="Deposit" stackId='a' fill="#8884d8" />
