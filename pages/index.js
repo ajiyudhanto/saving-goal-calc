@@ -4,6 +4,7 @@ import { Grid, Typography, TextField, Button, ButtonGroup, RadioGroup, Radio, Fo
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar, ResponsiveContainer } from 'recharts'
+import Navbar from '../components/Navbar'
 
 const CustomTooltip = ({ active, payload, label }) => {
   if (active && payload) {
@@ -22,8 +23,8 @@ const CustomTooltip = ({ active, payload, label }) => {
 
 export default function Home() {
   const [simulation, setSimulation] = useState({
-    setoranAwal: '1000',
-    setoranRutin: '100',
+    setoranAwal: '1000000',
+    setoranRutin: '100000',
     periodeSetoranRutin: 'bulanan',
     periodeInvestasi: '3',
     sukuBunga: '10',
@@ -151,6 +152,7 @@ export default function Home() {
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
       </Head>
 
+      <Navbar />
       <Grid container justify='center'>
         <Grid xs={12} item container justify='center' >
           <Typography variant='h5' style={{ fontWeight: 'bold', color: '#272727', marginTop: '50px', marginBottom: '50px' }}>Simulasi Bunga Berbunga</Typography>
