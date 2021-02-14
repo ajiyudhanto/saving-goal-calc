@@ -201,10 +201,10 @@ export default function Home() {
       </Head>
 
       {/* <Navbar /> */}
-      <Grid container justify='center' alignItems='center' style={{ minHeight: '91vh' }}>
-        <Hidden smUp>
+      <Grid container justify='center' alignItems='center'>
+        {/* <Hidden smUp>
           <Grid item xs={12} style={{ height: '5vh' }} />
-        </Hidden>
+        </Hidden> */}
         <Grid xs={10} sm={3} item container justify='center' alignItems='center'>
           <Grid xs={12} item container justify='flex-start' style={{ marginBottom: '15px' }}>
             <Grid xs={12} item container justify='flex-start'>
