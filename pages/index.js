@@ -186,6 +186,10 @@ export default function Home() {
     let newStr = toStringConverter(newNum.toString(), str)    
     return newStr
   }
+
+  function sukuBungaCalc () {
+
+  }
   
   return (
     <div className='root'>
@@ -370,10 +374,10 @@ export default function Home() {
                   aria-label="reduce"
                   style={{ width: '100%' }}
                   onClick={() => {
-                    if (Number(simulation.sukuBunga) - .25 <= 0) {
+                    if (Number(simulation.sukuBunga) - 1 <= 0) {
                       setSimulation({...simulation, sukuBunga: '0'})
                     } else {
-                      setSimulation({...simulation, sukuBunga: plusMinusHandler('sukuBunga', 'minus', .25)})
+                      setSimulation({...simulation, sukuBunga: plusMinusHandler('sukuBunga', 'minus', 1)})
                     }
                   }}
                 >
@@ -401,7 +405,7 @@ export default function Home() {
                 <Button
                   aria-label="increase"
                   style={{ width: '100%' }}
-                  onClick={() => setSimulation({...simulation, sukuBunga: plusMinusHandler('sukuBunga', 'plus', .25)})}
+                  onClick={() => setSimulation({...simulation, sukuBunga: plusMinusHandler('sukuBunga', 'plus', 1)})}
                 >
                   <AddIcon fontSize="small" style={{ color: 'blue' }} />
                 </Button>
