@@ -64,8 +64,7 @@ export default function Home() {
         newSimulation[event.target.name] = localeString
       }
     } else {
-      let localeString = toStringConverter(event.target.value, event.target.name)
-      newSimulation[event.target.name] = localeString
+      newSimulation[event.target.name] = event.target.value
     }
     setSimulation(newSimulation)
   }
@@ -78,12 +77,12 @@ export default function Home() {
         newStr += arrTemp[i]
       }
     }
-    
+    // console.log(Number(newStr))
     return Number(newStr)
   }
 
   function toStringConverter (str, name) {
-    // console.log(number, name)
+    // console.log(str, name)
     let number = toNumberConverter(str)
     if (number >= 1000) {
       let numbersTemp = number.toString().split('')
@@ -120,7 +119,7 @@ export default function Home() {
       }
       chartData.push(obj)
     }
-    console.log(chartData, 'cd')
+    // console.log(chartData, 'cd')
     setProgressChart(chartData)
   }
 
@@ -176,6 +175,17 @@ export default function Home() {
     const res = Math.round(e(period) + c(period))
     return res
   }
+
+  function plusMinusHandler (str, plusOrMinus, howMuch) {
+    let newNum = 0
+    if (plusOrMinus == 'plus') {
+      newNum = toNumberConverter(simulation[str]) + howMuch
+    } else {
+      newNum = toNumberConverter(simulation[str]) - howMuch
+    }
+    let newStr = toStringConverter(newNum.toString(), str)    
+    return newStr
+  }
   
   return (
     <div className='root'>
@@ -205,7 +215,7 @@ export default function Home() {
                     if (Number(simulation.setoranAwal - 100 <= 0)) {
                       setSimulation({...simulation, setoranAwal: '0'})
                     } else {
-                      setSimulation({...simulation, setoranAwal: (Number(simulation.setoranAwal) - 100).toString()})
+                      setSimulation({...simulation, setoranAwal: plusMinusHandler('setoranAwal', 'minus', 100) })
                     }
                   }}
                 >
@@ -233,7 +243,7 @@ export default function Home() {
                 <Button
                   aria-label="increase"
                   style={{ width: '100%' }}
-                  onClick={() => setSimulation({...simulation, setoranAwal: (Number(simulation.setoranAwal) + 100).toString()})}
+                  onClick={() => setSimulation({...simulation, setoranAwal: plusMinusHandler('setoranAwal', 'plus', 100)})}
                 >
                   <AddIcon fontSize="small" style={{ color: 'blue' }} />
                 </Button>
@@ -254,7 +264,7 @@ export default function Home() {
                     if (Number(simulation.setoranRutin) - 50 <= 0) {
                       setSimulation({...simulation, setoranRutin: '0'})
                     } else {
-                      setSimulation({...simulation, setoranRutin: (Number(simulation.setoranRutin) - 50).toString()})
+                      setSimulation({...simulation, setoranRutin: plusMinusHandler('setoranRutin', 'minus', 50)})
                     }
                   }}
                 >
@@ -285,7 +295,7 @@ export default function Home() {
                 <Button
                   aria-label="increase"
                   style={{ width: '100%' }}
-                  onClick={() => setSimulation({...simulation, setoranRutin: (Number(simulation.setoranRutin) + 50).toString()})}
+                  onClick={() => setSimulation({...simulation, setoranRutin: plusMinusHandler('setoranRutin', 'plus', 50)})}
                 >
                   <AddIcon fontSize="small" style={{ color: 'blue' }} />
                 </Button>
@@ -314,7 +324,7 @@ export default function Home() {
                     if (Number(simulation.periodeInvestasi) - 1 <= 0) {
                       setSimulation({...simulation, periodeInvestasi: '0'})
                     } else {
-                      setSimulation({...simulation, periodeInvestasi: (Number(simulation.periodeInvestasi) - 1).toString()})
+                      setSimulation({...simulation, periodeInvestasi: plusMinusHandler('periodeInvestasi', 'minus', 1)})
                     }
                   }}
                 >
@@ -342,7 +352,7 @@ export default function Home() {
                 <Button
                   aria-label="increase"
                   style={{ width: '100%' }}
-                  onClick={() => setSimulation({...simulation, periodeInvestasi: (Number(simulation.periodeInvestasi) + 1).toString()})}
+                  onClick={() => setSimulation({...simulation, periodeInvestasi: plusMinusHandler('periodeInvestasi', 'plus', 1)})}
                 >
                   <AddIcon fontSize="small" style={{ color: 'blue' }} />
                 </Button>
@@ -363,7 +373,7 @@ export default function Home() {
                     if (Number(simulation.sukuBunga) - .25 <= 0) {
                       setSimulation({...simulation, sukuBunga: '0'})
                     } else {
-                      setSimulation({...simulation, sukuBunga: (Number(simulation.sukuBunga) - .25).toString()})
+                      setSimulation({...simulation, sukuBunga: plusMinusHandler('sukuBunga', 'minus', .25)})
                     }
                   }}
                 >
@@ -391,7 +401,7 @@ export default function Home() {
                 <Button
                   aria-label="increase"
                   style={{ width: '100%' }}
-                  onClick={() => setSimulation({...simulation, sukuBunga: (Number(simulation.sukuBunga) + .25).toString()})}
+                  onClick={() => setSimulation({...simulation, sukuBunga: plusMinusHandler('sukuBunga', 'plus', .25)})}
                 >
                   <AddIcon fontSize="small" style={{ color: 'blue' }} />
                 </Button>
