@@ -206,7 +206,7 @@ export default function Home() {
           <Grid item xs={12} style={{ height: '5vh' }} />
         </Hidden>
         <Grid xs={10} sm={3} item container justify='center' alignItems='center'>
-          <Grid xs={12} item container justify='flex-start'>
+          <Grid xs={12} item container justify='flex-start' style={{ marginBottom: '15px' }}>
             <Grid xs={12} item container justify='flex-start'>
               <Typography style={{ fontWeight: 'bold' }}>Setoran Awal (Rupiah)</Typography>
             </Grid>
@@ -255,7 +255,7 @@ export default function Home() {
             </Grid>
           </Grid>
 
-          <Grid xs={12} item container justify='flex-start'>
+          <Grid xs={12} item container justify='flex-start' style={{ marginBottom: '5px' }}>
             <Grid xs={12} item container justify='flex-start'>
               <Typography style={{ fontWeight: 'bold' }}>Setoran Rutin (Rupiah)</Typography>
             </Grid>
@@ -315,7 +315,7 @@ export default function Home() {
             </Grid>
           </Grid>
 
-          <Grid xs={12} item container justify='flex-start'>
+          <Grid xs={12} item container justify='flex-start' style={{ marginBottom: '15px' }}>
             <Grid xs={12} item container justify='flex-start'>
               <Typography style={{ fontWeight: 'bold' }}>Periode Investasi (Tahun)</Typography>
             </Grid>
@@ -364,7 +364,7 @@ export default function Home() {
             </Grid>
           </Grid>
 
-          <Grid xs={12} item container justify='flex-start'>
+          <Grid xs={12} item container justify='flex-start' style={{ marginBottom: '15px' }}>
             <Grid xs={12} item container justify='flex-start'>
               <Typography style={{ fontWeight: 'bold' }}>Suku Bunga (%)</Typography>
             </Grid>
