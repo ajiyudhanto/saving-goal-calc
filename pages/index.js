@@ -200,7 +200,7 @@ export default function Home() {
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
       </Head>
 
-      <Navbar />
+      {/* <Navbar /> */}
       <Grid container justify='center' alignItems='center' style={{ minHeight: '91vh' }}>
         <Hidden smUp>
           <Grid item xs={12} style={{ height: '5vh' }} />
