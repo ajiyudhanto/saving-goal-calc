@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import Head from 'next/head'
+import Link from 'next/link'
 import { Grid, Typography, TextField, Button, ButtonGroup, RadioGroup, Radio, FormControl, FormControlLabel, Hidden } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
@@ -451,6 +452,9 @@ export default function Home() {
               </BarChart>
             </ResponsiveContainer>
           </Grid>
+        </Grid>
+        <Grid xs={10} sm={10} item container justify='center' style={{ marginTop: '15px' }} >
+          <Typography>Copyright © by <span style={{ color: '#2099d4' }}><Link href='https://investbro.id/'>InvestBro.id</Link></span></Typography>
         </Grid>
       </Grid>
     </div>
