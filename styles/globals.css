@@ -18,3 +18,7 @@ a {
 .root {
   flex-grow: 1;
 }
+
+.kpr-left {
+  margin-bottom: 10px !important;
+}

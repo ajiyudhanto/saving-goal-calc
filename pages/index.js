@@ -441,7 +441,7 @@ export default function Home() {
           </Grid>
           <Grid xs={12} item container justify='center'>
             <ResponsiveContainer width="95%" height={400}>
-              <BarChart  margin={{ top: 20, right: 0, left: 0, bottom: 50 }} data={ progressChart } >
+              <BarChart margin={{ top: 20, right: 0, left: 0, bottom: 50 }} data={ progressChart } >
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
                 <YAxis width={80} />
