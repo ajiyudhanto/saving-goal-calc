@@ -63,7 +63,7 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 export default function KPR () {
-  const [houseCost, setHouseCost] = useState('904750000')
+  const [houseCost, setHouseCost] = useState('904.750.000')
   const [downPayment, setDownPayment] = useState(10)
   const [totalDP, setTotalDP] = useState(0)
   const [sukuBunga, setSukuBunga] = useState(58)
