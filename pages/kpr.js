@@ -8,7 +8,10 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recha
 const CustomTextField = withStyles({
   root: {
     '& label.Mui-focused': {
-      color: 'green',
+      color: '#6FBE44',
+    },
+    '& .MuiInput-underline:after': {
+      borderBottomColor: '#6FBE44',
     },
     '& .MuiOutlinedInput-root': {
       '&.Mui-focused fieldset': {
@@ -64,8 +67,8 @@ const CustomTooltip = ({ active, payload, label }) => {
 
 export default function KPR () {
   const [houseCost, setHouseCost] = useState('904.750.000')
-  const [downPayment, setDownPayment] = useState(10)
-  const [totalDP, setTotalDP] = useState(0)
+  const [downPayment, setDownPayment] = useState('10')
+  const [totalDP, setTotalDP] = useState('0')
   const [sukuBunga, setSukuBunga] = useState(58)
   const [sukuBungaCommit, setSukuBungaCommit] = useState(58)
   const [jangkaWaktu, setJangkaWaktu] = useState(15)
@@ -81,7 +84,11 @@ export default function KPR () {
   useEffect(() => {
     jumlahPinjamanCalc()
   }, [houseCost, downPayment])
-
+  
+  // useEffect(() => {
+  //   DPCalc()
+  // }, [totalDP])
+  
   useEffect(() => {
     getPinjamanPerBulan()
   }, [jangkaWaktuCommit, sukuBungaCommit, jumlahPinjaman])
@@ -113,8 +120,7 @@ export default function KPR () {
   );
 
   const jumlahPinjamanCalc = () => {
-    setJumlahPinjaman(Number(houseCost.split('.').join('')) * ((100 - Number(downPayment)) / 100))
-    setTotalDP(Number(houseCost.split('.').join('')) * (Number(downPayment) / 100))
+    setJumlahPinjaman(Math.round(Number(houseCost.split('.').join('')) * ((100 - Number(downPayment.replace(/,/g, '.'))) / 100)))
   }
 
   const getTotalPerTahun = () => {
@@ -162,26 +168,50 @@ export default function KPR () {
   }
 
   const onChangeHandler = ({e = '', type = ''}) => {
-    if (/^[0-9]*$/.test(e.target.value[e.target.value.length - 1]) || !e.target.value) {
-      if (type === 'hc') {
+    if (type === 'hc' && (/^[0-9]*$/.test(e.target.value[e.target.value.length - 1]) || !e.target.value)) {
         const valueNumber = Number(e.target.value.split('.').join(''))
-        if (houseCost == 0 && valueNumber) {setHouseCost(e.target.value[1]); return true}
-        if (valueNumber) setHouseCost(valueNumber.toLocaleString().replace(/,/g, '.'))
-        if (!valueNumber) setHouseCost('0')
-      }
-      if (type === 'dp') {
-        if (downPayment == 0 && e.target.value) {setDownPayment(e.target.value[1]); return true}
-        if (e.target.value > 100) {setDownPayment(100); return true}
-        if (e.target.value) setDownPayment(e.target.value)
-        if (!e.target.value) setDownPayment(0)
-      }
+        if (houseCost == 0 && valueNumber) {setHouseCost(e.target.value[1]); totalDPCalc(downPayment, e.target.value[1]); return true}
+        if (valueNumber) {setHouseCost(valueNumber.toLocaleString().replace(/,/g, '.')); totalDPCalc(downPayment, valueNumber.toLocaleString().replace(/,/g, '.'));}
+        if (!valueNumber) {setHouseCost('0'); totalDPCalc(downPayment, '0')}
     }
+
+    if (type === 'dp' && (/^[0-9,]*$/.test(e.target.value[e.target.value.length - 1]) || !e.target.value)) {
+      const comma = e.target.value.split('').findIndex(e => e === ',')
+      const findComma = e.target.value.split('').filter(e => e === ',')
+      const valueNumber = Number(e.target.value.replace(/,/g, '.'))
+      // console.log(valueNumber.toString(), 'v')
+      // console.log(comma, 'c')
+      if (findComma.length > 1) return false
+      if (comma != -1 && comma < e.target.value.length - 2) return false
+      if (valueNumber > 100) {setDownPayment('100'); totalDPCalc('100', houseCost); return true}
+      if (e.target.value && e.target.value.length == 2 && e.target.value[0] == '0') {setDownPayment(e.target.value[1]); totalDPCalc(e.target.value[1], houseCost); return true}
+      if (e.target.value) {setDownPayment(e.target.value); totalDPCalc(e.target.value, houseCost); return true}
+      if (!valueNumber) {setDownPayment('0'); totalDPCalc('0', houseCost)}
+    }
+
+    if (type === 'tdp' && (/^[0-9]*$/.test(e.target.value[e.target.value.length - 1]) || !e.target.value)) {
+      const valueNumber = Number(e.target.value.split('.').join(''))
+      if (valueNumber > Number(houseCost.split('.').join(''))) {setTotalDP(houseCost); DPCalc(houseCost); return true}
+      if (totalDP == 0 && valueNumber) {setTotalDP(e.target.value[1]); DPCalc(e.target.value[1]); return true}
+      if (valueNumber) {setTotalDP(valueNumber.toLocaleString().replace(/,/g, '.')); DPCalc(valueNumber.toLocaleString().replace(/,/g, '.'))}
+      if (!valueNumber) {setTotalDP('0'); DPCalc('0')}
+    }
+  }
+
+  const DPCalc = (val) => {
+    let newDP = ((Number(val.split('.').join('')) / Number(houseCost.split('.').join(''))) * 100)
+    newDP = Math.round(newDP * 10) / 10
+    setDownPayment(newDP.toString().replace('.', ','))
+  }
+
+  const totalDPCalc = (dp, hc) => {
+    setTotalDP(Math.round((Number(hc.split('.').join('')) * (Number(dp.replace(/,/g, '.')) / 100))).toLocaleString().replace(/,/g, '.'))
   }
 
   return (
     <>
       <Grid container justify='center'>
-        <Grid item container justify='center' xs={11} sm={10} md={7} style={{ paddingLeft: 30 }}>
+        <Grid item container justify='center' xs={11} sm={10} md={7} style={{ paddingLeft: 30, paddingTop: 15 }}>
           <Grid item container className='kpr-left' alignItems='center' xs={4}>
             <Typography>Harga Rumah</Typography>
           </Grid>
@@ -211,21 +241,31 @@ export default function KPR () {
               <Typography>:</Typography>
             </Grid>
             <Grid item container alignItems='center' xs={11}>
-              <Grid item container alignItems='center' xs={3}>
+              <Grid item container alignItems='center' xs={5} sm={3}>
                 <CustomTextField
                   className='text-field'
                   variant='outlined'
                   size='small'
                   value={downPayment}
                   onChange={(e) => onChangeHandler({e, type: 'dp'})}
-                  style={{ width: 75 }}
+                  style={{ width: 90, marginRight: 15 }}
                   InputProps={{
                     endAdornment: <InputAdornment position="end">%</InputAdornment>,
                   }}
                 />
               </Grid>
-              <Grid item container alignItems='center' xs={9}>
-                <Typography>Rp. { totalDP.toLocaleString().replace(/,/g, '.') }</Typography>
+              <Grid item container alignItems='center' xs={7} sm={9}>
+                <CustomTextField
+                  className='text-field'
+                  // variant='outlined'
+                  size='small'
+                  value={totalDP}
+                  onChange={(e) => onChangeHandler({e, type: 'tdp'})}
+                  style={{ width: 150 }}
+                  InputProps={{
+                    startAdornment: <InputAdornment position="start">Rp</InputAdornment>,
+                  }}
+                />
               </Grid>
             </Grid>
           </Grid>
@@ -341,7 +381,7 @@ export default function KPR () {
             <Typography variant='h5' style={{ color: '#6FBE44', fontWeight: 'bolder' }}>Ringkasan</Typography>
           </Grid>
           <Grid item container className='kpr-left' alignItems='center' xs={4}>
-            <Typography>Pinjaman Per Bulan</Typography>
+            <Typography>Cicilan Per Bulan</Typography>
           </Grid>
           <Grid item container className='kpr-left' alignItems='center' xs={8}>
             <Grid item container alignItems='center' xs={1}>
