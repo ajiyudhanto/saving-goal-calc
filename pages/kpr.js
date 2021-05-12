@@ -66,13 +66,13 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 export default function KPR () {
-  const [houseCost, setHouseCost] = useState('904.750.000')
+  const [houseCost, setHouseCost] = useState('1.000.000.000')
   const [downPayment, setDownPayment] = useState('10')
-  const [totalDP, setTotalDP] = useState('90.475.000')
-  const [sukuBunga, setSukuBunga] = useState(58)
-  const [sukuBungaCommit, setSukuBungaCommit] = useState(58)
-  const [jangkaWaktu, setJangkaWaktu] = useState(15)
-  const [jangkaWaktuCommit, setJangkaWaktuCommit] = useState(15)
+  const [totalDP, setTotalDP] = useState('100.000.000')
+  const [sukuBunga, setSukuBunga] = useState(70)
+  const [sukuBungaCommit, setSukuBungaCommit] = useState(70)
+  const [jangkaWaktu, setJangkaWaktu] = useState(10)
+  const [jangkaWaktuCommit, setJangkaWaktuCommit] = useState(10)
   const [jumlahPinjaman, setJumlahPinjaman] = useState(0)
   const [pinjamanPerBulan, setPinjamanPerBulan] = useState(0)
   const [totalPinjaman, setTotalPinjaman] = useState(0)
@@ -388,7 +388,8 @@ export default function KPR () {
               <Typography>:</Typography>
             </Grid>
             <Grid item container alignItems='center' xs={11}>
-              <Typography>Rp. { Math.round(pinjamanPerBulan).toLocaleString().replace(/,/g, '.') }</Typography>
+              <Typography style={{ marginRight: 5 }}>Rp.</Typography>
+              <Typography style={{ width: 150, textAlign: 'right', overflowX: 'hidden' }}>{ Math.round(pinjamanPerBulan).toLocaleString().replace(/,/g, '.') }</Typography>
             </Grid>
           </Grid>
           <Grid item container className='kpr-left' alignItems='center' xs={4}>
@@ -399,7 +400,8 @@ export default function KPR () {
               <Typography>:</Typography>
             </Grid>
             <Grid item container alignItems='center' xs={11}>
-              <Typography>Rp. { Math.round(totalPinjaman).toLocaleString().replace(/,/g, '.') }</Typography>
+              <Typography style={{ marginRight: 5 }}>Rp.</Typography>
+              <Typography style={{ width: 150, textAlign: 'right', overflowX: 'hidden' }}>{ Math.round(totalPinjaman).toLocaleString().replace(/,/g, '.') }</Typography>
             </Grid>
           </Grid>
           <Grid item container className='kpr-left' alignItems='center' xs={4}>
@@ -410,7 +412,8 @@ export default function KPR () {
               <Typography>:</Typography>
             </Grid>
             <Grid item container alignItems='center' xs={11}>
-              <Typography>Rp. { Math.round(totalBungaPinjaman).toLocaleString().replace(/,/g, '.') }</Typography>
+              <Typography style={{ marginRight: 5 }}>Rp.</Typography>
+              <Typography style={{ width: 150, textAlign: 'right', overflowX: 'hidden' }}>{ Math.round(totalBungaPinjaman).toLocaleString().replace(/,/g, '.') }</Typography>
             </Grid>
           </Grid>
         </Grid>
