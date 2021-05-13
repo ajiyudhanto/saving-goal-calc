@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import { Grid, Typography, TextField, Button, ButtonGroup, RadioGroup, Radio, FormControl, FormControlLabel, Hidden } from '@material-ui/core'
+import { withStyles, makeStyles } from '@material-ui/core/styles'
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
 import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar, ResponsiveContainer } from 'recharts'
@@ -21,6 +22,22 @@ const CustomTooltip = ({ active, payload, label }) => {
 
   return null;
 };
+
+const CustomTextField = withStyles({
+  root: {
+    '& label.Mui-focused': {
+      color: '#2E91CD',
+    },
+    '& .MuiInput-underline:after': {
+      borderBottomColor: '#2E91CD',
+    },
+    '& .MuiOutlinedInput-root': {
+      '&.Mui-focused fieldset': {
+        borderColor: '#2E91CD',
+      },
+    },
+  },
+})(TextField);
 
 export default function Home() {
   const [simulation, setSimulation] = useState({
@@ -255,7 +272,7 @@ export default function Home() {
               </ButtonGroup>
             </Grid>
             <Grid xs={6} sm={6} md={8} item container justify='flex-start' style={{ width: '100%' }}>
-              <TextField
+              <CustomTextField
                 value={simulation.setoranAwal}                
                 inputProps={{
                   style: {
@@ -304,7 +321,7 @@ export default function Home() {
               </ButtonGroup>
             </Grid>
             <Grid xs={6} sm={6} md={8} item container justify='flex-start'>
-              <TextField
+              <CustomTextField
                 value={simulation.setoranRutin}
                 // InputProps={{
                 //   startAdornment: <InputAdornment position="start">Rp.</InputAdornment>,
@@ -364,7 +381,7 @@ export default function Home() {
               </ButtonGroup>
             </Grid>
             <Grid xs={6} sm={6} md={8} item container justify='flex-start'>
-              <TextField
+              <CustomTextField
                 value={simulation.periodeInvestasi}
                 variant='outlined'
                 inputProps={{
@@ -414,7 +431,7 @@ export default function Home() {
               </ButtonGroup>
             </Grid>
             <Grid xs={6} sm={6} md={8} item container justify='flex-start'>
-              <TextField
+              <CustomTextField
                 value={sukuBunga}
                 variant='outlined'                
                 inputProps={{
