@@ -34,6 +34,7 @@ export default function Home() {
   
   const [progressChart, setProgressChart] = useState([])
   const [proyeksiSaldo, setProyeksiSaldo] = useState(0)
+  const [sukuBunga, setSukuBunga] = useState('10')
   const [modal, setModal] = useState(0)
   const [bunga, setBunga] = useState(0)
 
@@ -54,7 +55,7 @@ export default function Home() {
 
   function onChangeHandler (event) {
     let newSimulation = {...simulation}
-    console.log(event.target.value)
+    // console.log(event.target.value)
     if (event.target.name === 'setoranAwal' || event.target.name === 'setoranRutin' || event.target.name === 'periodeInvestasi' || event.target.name === 'sukuBunga') {
       if ( isNaN(Number(event.target.value)) === true && isNaN(toNumberConverter(event.target.value))) {
         console.log('ini NAN')
@@ -71,6 +72,7 @@ export default function Home() {
   }
 
   function toNumberConverter (str) {
+    // console.log(str)
     let arrTemp = str.split('')
     let newStr = ''
     for (let i = 0; i < arrTemp.length; i++) {
@@ -148,7 +150,7 @@ export default function Home() {
 
   function a () {
     //1+r/n    
-    return 1 + ((toNumberConverter(simulation.sukuBunga) / 100) / daysCount())
+    return 1 + ((Number(simulation.sukuBunga) / 100) / daysCount())
   }
 
   function b (period) {
@@ -163,7 +165,7 @@ export default function Home() {
 
   function d (period) {
     //future
-    let result = (Math.pow(a(), b(period)) - 1) / ((toNumberConverter(simulation.sukuBunga) / 100) / daysCount())
+    let result = (Math.pow(a(), b(period)) - 1) / ((Number(simulation.sukuBunga) / 100) / daysCount())
     return result
   }
 
@@ -188,8 +190,32 @@ export default function Home() {
     return newStr
   }
 
-  function sukuBungaCalc () {
+  const sukuBungaPlusMinusHandler = (type) => {
+    let newSimulation = {...simulation}
+    if (type === 'min') {
+      newSimulation.sukuBunga = (Number(newSimulation.sukuBunga) - 1).toString()
+    }
+    if (type === 'plus') {
+      newSimulation.sukuBunga = (Number(newSimulation.sukuBunga) + 1).toString()
+    }
+    // console.log(newSimulation)
+    setSimulation(newSimulation)
+    setSukuBunga(newSimulation.sukuBunga.replace('.', ','))
+  }
 
+  function sukuBungaOnChangeHandler (e) {
+    if (/^[0-9,]*$/.test(e.target.value[e.target.value.length - 1]) || !e.target.value) {
+      const comma = e.target.value.split('').findIndex(e => e === ',')
+      const findComma = e.target.value.split('').filter(e => e === ',')
+      const valueNumber = Number(e.target.value.replace(/,/g, '.'))
+      let newSimulation = {...simulation}
+      if (findComma.length > 1) return false
+      if (comma != -1 && comma < e.target.value.length - 2) return false
+      if (e.target.value && e.target.value.length == 2 && e.target.value[0] == '0' && e.target.value[1] != ',') {newSimulation.sukuBunga = e.target.value[1]; setSimulation(newSimulation); setSukuBunga(e.target.value[1]); return true}
+      if (e.target.value) {newSimulation.sukuBunga = e.target.value.replace(',', '.'); setSimulation(newSimulation); setSukuBunga(e.target.value); return true}
+      if (!valueNumber) {newSimulation.sukuBunga = '0'; setSimulation(newSimulation); setSukuBunga('0')}
+    }
+    // console.log(e.target.value)
   }
   
   return (
@@ -224,7 +250,7 @@ export default function Home() {
                     }
                   }}
                 >
-                  <RemoveIcon fontSize="small" style={{ color: 'blue' }} />
+                  <RemoveIcon fontSize="small" style={{ color: 'rgb(46,145,205)' }} />
                 </Button>
               </ButtonGroup>
             </Grid>
@@ -250,7 +276,7 @@ export default function Home() {
                   style={{ width: '100%' }}
                   onClick={() => setSimulation({...simulation, setoranAwal: plusMinusHandler('setoranAwal', 'plus', 100)})}
                 >
-                  <AddIcon fontSize="small" style={{ color: 'blue' }} />
+                  <AddIcon fontSize="small" style={{ color: 'rgb(46,145,205)' }} />
                 </Button>
               </ButtonGroup>
             </Grid>
@@ -273,7 +299,7 @@ export default function Home() {
                     }
                   }}
                 >
-                  <RemoveIcon fontSize="small" style={{ color: 'blue' }} />
+                  <RemoveIcon fontSize="small" style={{ color: 'rgb(46,145,205)' }} />
                 </Button>
               </ButtonGroup>
             </Grid>
@@ -302,15 +328,15 @@ export default function Home() {
                   style={{ width: '100%' }}
                   onClick={() => setSimulation({...simulation, setoranRutin: plusMinusHandler('setoranRutin', 'plus', 50)})}
                 >
-                  <AddIcon fontSize="small" style={{ color: 'blue' }} />
+                  <AddIcon fontSize="small" style={{ color: 'rgb(46,145,205)' }} />
                 </Button>
               </ButtonGroup>
             </Grid>
             <Grid xs={12} item container>
               <FormControl>
                 <RadioGroup row name="periodeSetoranRutin" onChange={(event) => onChangeHandler(event)} value={simulation.periodeSetoranRutin}>
-                  <FormControlLabel value="bulanan" control={<Radio color="primary" />} label="Bulanan" />
-                  <FormControlLabel value="tahunan" control={<Radio color="primary" />} label="Tahunan" />
+                  <FormControlLabel value="bulanan" control={<Radio style={{ color: '#2E91CD' }} />} label="Bulanan" />
+                  <FormControlLabel value="tahunan" control={<Radio style={{ color: '#2E91CD' }} />} label="Tahunan" />
                 </RadioGroup>
               </FormControl>
             </Grid>
@@ -333,7 +359,7 @@ export default function Home() {
                     }
                   }}
                 >
-                  <RemoveIcon fontSize="small" style={{ color: 'blue' }} />
+                  <RemoveIcon fontSize="small" style={{ color: 'rgb(46,145,205)' }} />
                 </Button>
               </ButtonGroup>
             </Grid>
@@ -359,7 +385,7 @@ export default function Home() {
                   style={{ width: '100%' }}
                   onClick={() => setSimulation({...simulation, periodeInvestasi: plusMinusHandler('periodeInvestasi', 'plus', 1)})}
                 >
-                  <AddIcon fontSize="small" style={{ color: 'blue' }} />
+                  <AddIcon fontSize="small" style={{ color: '#2E91CD' }} />
                 </Button>
               </ButtonGroup>
             </Grid>
@@ -377,18 +403,19 @@ export default function Home() {
                   onClick={() => {
                     if (Number(simulation.sukuBunga) - 1 <= 0) {
                       setSimulation({...simulation, sukuBunga: '0'})
+                      setSukuBunga('0')
                     } else {
-                      setSimulation({...simulation, sukuBunga: plusMinusHandler('sukuBunga', 'minus', 1)})
+                      sukuBungaPlusMinusHandler('min')
                     }
                   }}
                 >
-                  <RemoveIcon fontSize="small" style={{ color: 'blue' }} />
+                  <RemoveIcon fontSize="small" style={{ color: 'rgb(46,145,205)' }} />
                 </Button>
               </ButtonGroup>
             </Grid>
             <Grid xs={6} sm={6} md={8} item container justify='flex-start'>
               <TextField
-                value={simulation.sukuBunga}
+                value={sukuBunga}
                 variant='outlined'                
                 inputProps={{
                   style: {
@@ -398,7 +425,7 @@ export default function Home() {
                 style={{ width: '100%' }}
                 size='small'
                 name='sukuBunga'
-                onChange={(event) => onChangeHandler(event)}
+                onChange={(event) => sukuBungaOnChangeHandler(event)}
               />
             </Grid>
             <Grid xs={3} sm={3} md={2} item container>
@@ -406,9 +433,9 @@ export default function Home() {
                 <Button
                   aria-label="increase"
                   style={{ width: '100%' }}
-                  onClick={() => setSimulation({...simulation, sukuBunga: plusMinusHandler('sukuBunga', 'plus', 1)})}
+                  onClick={() => sukuBungaPlusMinusHandler('plus')}
                 >
-                  <AddIcon fontSize="small" style={{ color: 'blue' }} />
+                  <AddIcon fontSize="small" style={{ color: '#2E91CD' }} />
                 </Button>
               </ButtonGroup>
             </Grid>
@@ -421,9 +448,9 @@ export default function Home() {
             <Grid xs={12} item container>
               <FormControl>
                 <RadioGroup row name="frekuensiBunga" onChange={(event) => onChangeHandler(event)} value={simulation.frekuensiBunga}>
-                  <FormControlLabel value="harian" control={<Radio color="primary" />} label="Harian" />
-                  <FormControlLabel value="bulanan" control={<Radio color="primary" />} label="Bulanan" />
-                  <FormControlLabel value="tahunan" control={<Radio color="primary" />} label="Tahunan" />
+                  <FormControlLabel value="harian" control={<Radio style={{ color: '#2E91CD' }} />} label="Harian" />
+                  <FormControlLabel value="bulanan" control={<Radio style={{ color: '#2E91CD' }} />} label="Bulanan" />
+                  <FormControlLabel value="tahunan" control={<Radio style={{ color: '#2E91CD' }} />} label="Tahunan" />
                 </RadioGroup>
               </FormControl>
             </Grid>
@@ -447,8 +474,8 @@ export default function Home() {
                 <YAxis width={80} />
                 <Tooltip payload={ progressChart } content={<CustomTooltip />} />
                 <Legend verticalAlign='bottom' height={5} />
-                <Bar dataKey="Deposit" stackId='a' fill="#8884d8" />
-                <Bar dataKey="Interest" stackId='a' fill="#82ca9d" />
+                <Bar dataKey="Deposit" stackId='a' fill="#2E91CD" />
+                <Bar dataKey="Interest" stackId='a' fill="#6FBE44" />
               </BarChart>
             </ResponsiveContainer>
           </Grid>
