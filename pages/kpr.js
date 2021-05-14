@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
+import Head from 'next/head'
 import { Grid, TextField, InputAdornment, Slider, Typography } from '@material-ui/core'
 import { withStyles, makeStyles } from '@material-ui/core/styles'
 import { debounce } from 'lodash'
@@ -210,6 +211,13 @@ export default function KPR () {
 
   return (
     <>
+      <Head>
+        <title>Simulasi KPR - Kalkulator Kredit Pemilikan Rumah</title>
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+      </Head>
+
       <Grid container justify='center'>
         <Grid item container justify='center' xs={11} sm={10} md={7} style={{ paddingLeft: 30, paddingTop: 15 }}>
           <Grid item container className='kpr-left' alignItems='center' xs={4}>
