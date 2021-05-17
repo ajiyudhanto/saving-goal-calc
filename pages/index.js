@@ -410,7 +410,7 @@ export default function Home() {
 
           <Grid xs={12} item container justify='flex-start' style={{ marginBottom: '15px' }}>
             <Grid xs={12} item container justify='flex-start'>
-              <Typography style={{ fontWeight: 'bold' }}>Suku Bunga (%)</Typography>
+              <Typography style={{ fontWeight: 'bold' }}>Suku Bunga (%) Tahun</Typography>
             </Grid>
             <Grid xs={3} sm={3} md={2} item container>
               <ButtonGroup style={{ width: '100%' }}>
